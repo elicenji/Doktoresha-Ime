@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E vogla e kujt je ti Megi?</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:url('couple.jpg') center/cover no-repeat;
+position:relative;
+}
+
+/* Blur overlay */
+body::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
+z-index:0;
+}
+
+.container{
+position:relative;
+z-index:2;
+text-align:center;
+color:white;
+}
+
+.neon{
+font-size:38px;
+color:#fff;
+text-shadow:
+0 0 5px #ff00c8,
+0 0 10px #ff00c8,
+0 0 20px #ff00c8,
+0 0 40px #ff00c8;
+animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker{
+from{opacity:1;}
+to{opacity:0.8;}
+}
+
+.buttons{
+margin-top:40px;
+display:flex;
+gap:20px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+button{
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+#enkel{
+background:#ff4da6;
+color:white;
+}
+
+#tjeter{
+background:#444;
+color:white;
+}
+
+#bear{
+display:none;
+margin-top:20px;
+animation: shake 0.5s infinite alternate;
+}
+
+@keyframes shake{
+from{transform:translateX(-5px);}
+to{transform:translateX(5px);}
+}
+
+#reasons{
+display:none;
+margin-top:30px;
+font-size:18px;
+}
+
+.reason-btn{
+margin-top:15px;
+background:#ff4da6;
+color:white;
+padding:12px 20px;
+border-radius:10px;
+border:none;
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+z-index:1;
+pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9e0b7d.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+<h1 class="neon">E vogla e kujt je ti Megi?</h1>
+
+<div class="buttons">
+<button id="enkel">E Enkelit</button>
+<button id="tjeter">E dikujt tjetër</button>
+</div>
+
+<div id="bear">
+🐻 Mos u bëj goc e keqe...
+</div>
+
+<div id="reasons">
+<h2>Ashtu pra 💕</h2>
+<button class="reason-btn" onclick="showReasons()">Doni të dini pse keni bërë zgjedhjen e duhur?</button>
+
+<div id="finalReasons" style="margin-top:20px;"></div>
+</div>
+</div>
+
+<script>
+let tjeter=document.getElementById("tjeter");
+let enkel=document.getElementById("enkel");
+let bear=document.getElementById("bear");
+let scale=1;
+
+tjeter.addEventListener("click",()=>{
+scale+=0.5;
+enkel.style.transform="scale("+scale+")";
+bear.style.display="block";
+});
+
+enkel.addEventListener("click",()=>{
+document.querySelector(".buttons").style.display="none";
+bear.style.display="none";
+document.getElementById("reasons").style.display="block";
+});
+
+function showReasons(){
+document.getElementById("finalReasons").innerHTML=`
+<p>1️⃣ Sepse me këtë zgjedhje ti bën më të bukur jetën time dhe më të sigurt jetën tënde ❤️</p>
+<p>2️⃣ Sepse zgjedhja juaj ishte e saktë 😉</p>
+<p>3️⃣ Po mos më kishe zgjedhur mua do ti këputja faqet 😈🐰</p>
+<h3 style="margin-top:20px;">TEK E FUNDIT... E VOGLA IME JE TI 💗</h3>
+`;
+}
+
+/* Particles */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+window.addEventListener("mousemove",(e)=>{
+for(let i=0;i<5;i++){
+particles.push({x:e.clientX,y:e.clientY,size:5,life:100});
+}
+});
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach((p,i)=>{
+p.size-=0.1;
+p.life--;
+ctx.fillStyle="pink";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+if(p.life<=0)particles.splice(i,1);
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+/* Easter Egg */
+document.addEventListener("keydown",(e)=>{
+if(e.key==="m"){
+let pass=prompt("Password?");
+if(pass==="enkeli123"){
+alert("Ti je bota ime 🌍❤️");
+}
+}
+});
+</script>
+
+</body>
+</html>
