@@ -19,21 +19,553 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('couple.jpg') center/cover no-repeat;
+    /* BACKGROUND I RI: Gradient i natës */
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     position: relative;
   }
 
-  /* Overlay */
+  /* SHTIMI I YJEVE */
   body::before {
     content: "";
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
+    /* Krijon pika të bardha si yje */
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 250px 250px;
+    animation: starsAnimation 5s infinite alternate;
+    opacity: 0.5;
     z-index: 0;
   }
 
+  @keyframes starsAnimation {
+    from { opacity: 0.4; transform: translateY(0); }
+    to { opacity: 0.8; transform: translateY(-5px); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    max-width: 650px;
+    padding: 15px;
+    /* Pak blur prapa tekstit që të lexohet më mirë */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .neon {
+    font-size: 38px;
+    text-shadow: 0 0 10px #ff00c8, 0 0 20px #ff00c8, 0 0 30px #ff00c8;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.4s;
+    font-weight: 600;
+  }
+
+  #enkel {
+    background: #ff4da6;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 77, 166, 0.5);
+  }
+
+  #tjeter {
+    background: #444;
+    color: white;
+  }
+
+  .reason-item {
+    margin-bottom: 20px;
+    opacity: 0;
+    transition: 0.6s;
+    font-size: 20px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  }
+
+  #finalText {
+    margin-top: 25px;
+    opacity: 0;
+    transition: 0.8s;
+    font-weight: 700;
+    font-size: 22px;
+    color: #ffb3d9;
+  }
+
+  .easter-egg {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 70px;
+    cursor: pointer;
+    z-index: 9999;
+    animation: shake 1s infinite, floatUpDown 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px #ff69b4);
+    user-select: none;
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(-3px); }
+    100% { transform: translateX(3px); }
+  }
+
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0) translateX(-3px); }
+    50% { transform: translateY(-30px) translateX(3px); }
+  }
+
+  .heart {
+    position: fixed;
+    color: #ff69b4;
+    font-size: 20px;
+    animation: fall 4s linear forwards;
+    z-index: 1;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .crack {
+    animation: crackAnim 0.6s forwards;
+  }
+
+  @keyframes crackAnim {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3) rotate(10deg); }
+    100% { transform: scale(0); opacity: 0; }
+  }
+
+  #sad-bear {
+    position: fixed;
+    bottom: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 18px;
+    padding: 14px 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 20;
+    animation: slideUpFade 0.5s ease forwards;
+  }
+
+  @keyframes slideUpFade {
+    0% { opacity: 0; transform: translateX(-50%) translateY(30px); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+</style>
+</head>
+
+<body>
+
+<audio id="music" autoplay loop muted>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_2b9f1f2f3d.mp3?filename=cute-love-10882.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <h1 class="neon">E vogla e kujt je ti Megi?</h1>
+
+  <div class="buttons">
+    <button id="enkel">E Enkelit</button>
+    <button id="tjeter">E dikujt tjetër</button>
+  </div>
+
+  <div id="reasons" style="display:none; margin-top:25px;"></div>
+</div>
+
+<script>
+  let scale = 1;
+  let enkel = document.getElementById("enkel");
+  let tjeter = document.getElementById("tjeter");
+  let reasonsDiv = document.getElementById("reasons");
+
+  tjeter.addEventListener("click", () => {
+    scale += 0.4;
+    enkel.style.transform = "scale(" + scale + ")";
+    enkel.style.zIndex = "10";
+
+    if (!document.getElementById("sad-bear")) {
+      let bear = document.createElement("div");
+      bear.id = "sad-bear";
+      bear.innerHTML = '🐻 Hej mos u bëj goc e keqe';
+      document.body.appendChild(bear);
+
+      setTimeout(() => {
+        bear.style.transition = "opacity 0.5s ease";
+        bear.style.opacity = 0;
+        setTimeout(() => bear.remove(), 500);
+      }, 3000);
+    }
+
+    if (scale > 4) {
+      tjeter.style.display = "none";
+    }
+  });
+
+  enkel.addEventListener("click", () => {
+    document.querySelector(".buttons").style.display = "none";
+    reasonsDiv.style.display = "block";
+    reasonsDiv.innerHTML = `
+      <p style="font-size:22px; font-weight:700; margin-bottom:20px;">
+        Urime doktoresh ju bet zgjedhjen e duhur 💖
+      </p>
+      <button id="showReasonsBtn" style="
+        padding:12px 20px; border-radius:10px; border:none; background:#ff4da6; color:white; cursor:pointer;">
+        Doni të dini pse kjo ishte zgjidhja e duhur?
+      </button>
+      <div id="finalReasons" style="margin-top:20px;"></div>
+    `;
+
+    document.getElementById("showReasonsBtn").addEventListener("click", () => {
+      let div = document.getElementById("finalReasons");
+      div.innerHTML = `
+        <p class="reason-item">1️⃣ Sepse zgjidhja juaj ishte e drejt ju jeni vertet doktoresha ime ❤️</p>
+        <p class="reason-item">2️⃣ Sepse kjo zgjedhje ben jeten tende me te sigurt dhe jeten time me te bukur 💕</p>
+        <p class="reason-item">3️⃣ Nese nuk do kishit ber kete zgjedhje do ti kputja faqet 😏</p>
+        <h3 id="finalText">TEK E FUNDIT... E VOGLA IME JE TI 💗</h3>
+      `;
+
+      let items = document.querySelectorAll(".reason-item");
+      items.forEach((item, i) => {
+        setTimeout(() => { item.style.opacity = "1"; }, i * 700);
+      });
+
+      setTimeout(() => { document.getElementById("finalText").style.opacity = "1"; }, 2500);
+      setInterval(createHeart, 400);
+      setTimeout(() => { spawnEgg(); }, 3000);
+    }, { once: true });
+  });
+
+  function spawnEgg() {
+    if(document.querySelector('.easter-egg')) return;
+    let egg = document.createElement("div");
+    egg.className = "easter-egg";
+    egg.innerHTML = "🥚";
+    egg.style.right = (Math.random() * 50 + 20) + "px";
+    egg.style.bottom = "20px";
+    document.body.appendChild(egg);
+
+    egg.addEventListener("click", () => {
+      egg.classList.add("crack");
+      setTimeout(() => {
+        let pass = prompt("Shkruaj passwordin:");
+        if (pass === "DoktoreshaEnkit@Divjak.Com") {
+          alert("Ti je bota ime 🌍❤️");
+        } else {
+          alert("Gabim 😏");
+        }
+      }, 600);
+    });
+  }
+
+  function createHeart() {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-20px";
+    heart.style.fontSize = (10 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 4000);
+  }
+
+  const audio = document.getElementById('music');
+  audio.muted = true;
+  function enableAudio() {
+    audio.muted = false;
+    audio.play();
+    window.removeEventListener('click', enableAudio);
+  }
+  window.addEventListener('click', enableAudio, { once: true });
+</script>
+
+</body>
+</html>
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .neon {
+    font-size: 38px;
+    text-shadow: 0 0 10px #ff00c8, 0 0 20px #ff00c8, 0 0 30px #ff00c8;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.4s;
+    font-weight: 600;
+  }
+
+  #enkel {
+    background: #ff4da6;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 77, 166, 0.5);
+  }
+
+  #tjeter {
+    background: #444;
+    color: white;
+  }
+
+  .reason-item {
+    margin-bottom: 20px;
+    opacity: 0;
+    transition: 0.6s;
+    font-size: 20px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  }
+
+  #finalText {
+    margin-top: 25px;
+    opacity: 0;
+    transition: 0.8s;
+    font-weight: 700;
+    font-size: 22px;
+    color: #ffb3d9;
+  }
+
+  .easter-egg {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 70px;
+    cursor: pointer;
+    z-index: 9999;
+    animation: shake 1s infinite, floatUpDown 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px #ff69b4);
+    user-select: none;
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(-3px); }
+    100% { transform: translateX(3px); }
+  }
+
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0) translateX(-3px); }
+    50% { transform: translateY(-30px) translateX(3px); }
+  }
+
+  .heart {
+    position: fixed;
+    color: #ff69b4;
+    font-size: 20px;
+    animation: fall 4s linear forwards;
+    z-index: 1;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .crack {
+    animation: crackAnim 0.6s forwards;
+  }
+
+  @keyframes crackAnim {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3) rotate(10deg); }
+    100% { transform: scale(0); opacity: 0; }
+  }
+
+  #sad-bear {
+    position: fixed;
+    bottom: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 18px;
+    padding: 14px 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 20;
+    animation: slideUpFade 0.5s ease forwards;
+  }
+
+  @keyframes slideUpFade {
+    0% { opacity: 0; transform: translateX(-50%) translateY(30px); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+</style>
+</head>
+
+<body>
+
+<audio id="music" autoplay loop muted>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_2b9f1f2f3d.mp3?filename=cute-love-10882.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <h1 class="neon">E vogla e kujt je ti Megi?</h1>
+
+  <div class="buttons">
+    <button id="enkel">E Enkelit</button>
+    <button id="tjeter">E dikujt tjetër</button>
+  </div>
+
+  <div id="reasons" style="display:none; margin-top:25px;"></div>
+</div>
+
+<script>
+  let scale = 1;
+  let enkel = document.getElementById("enkel");
+  let tjeter = document.getElementById("tjeter");
+  let reasonsDiv = document.getElementById("reasons");
+
+  tjeter.addEventListener("click", () => {
+    scale += 0.4;
+    enkel.style.transform = "scale(" + scale + ")";
+    enkel.style.zIndex = "10";
+
+    if (!document.getElementById("sad-bear")) {
+      let bear = document.createElement("div");
+      bear.id = "sad-bear";
+      bear.innerHTML = '🐻 Hej mos u bëj goc e keqe';
+      document.body.appendChild(bear);
+
+      setTimeout(() => {
+        bear.style.transition = "opacity 0.5s ease";
+        bear.style.opacity = 0;
+        setTimeout(() => bear.remove(), 500);
+      }, 3000);
+    }
+
+    if (scale > 4) {
+      tjeter.style.display = "none";
+    }
+  });
+
+  enkel.addEventListener("click", () => {
+    document.querySelector(".buttons").style.display = "none";
+    reasonsDiv.style.display = "block";
+    reasonsDiv.innerHTML = `
+      <p style="font-size:22px; font-weight:700; margin-bottom:20px;">
+        Urime doktoresh ju bet zgjedhjen e duhur 💖
+      </p>
+      <button id="showReasonsBtn" style="
+        padding:12px 20px; border-radius:10px; border:none; background:#ff4da6; color:white; cursor:pointer;">
+        Doni të dini pse kjo ishte zgjidhja e duhur?
+      </button>
+      <div id="finalReasons" style="margin-top:20px;"></div>
+    `;
+
+    document.getElementById("showReasonsBtn").addEventListener("click", () => {
+      let div = document.getElementById("finalReasons");
+      div.innerHTML = `
+        <p class="reason-item">1️⃣ Sepse zgjidhja juaj ishte e drejt ju jeni vertet doktoresha ime ❤️</p>
+        <p class="reason-item">2️⃣ Sepse kjo zgjedhje ben jeten tende me te sigurt dhe jeten time me te bukur 💕</p>
+        <p class="reason-item">3️⃣ Nese nuk do kishit ber kete zgjedhje do ti kputja faqet 😏</p>
+        <h3 id="finalText">TEK E FUNDIT... E VOGLA IME JE TI 💗</h3>
+      `;
+
+      let items = document.querySelectorAll(".reason-item");
+      items.forEach((item, i) => {
+        setTimeout(() => { item.style.opacity = "1"; }, i * 700);
+      });
+
+      setTimeout(() => { document.getElementById("finalText").style.opacity = "1"; }, 2500);
+      setInterval(createHeart, 400);
+      setTimeout(() => { spawnEgg(); }, 3000);
+    }, { once: true });
+  });
+
+  function spawnEgg() {
+    if(document.querySelector('.easter-egg')) return;
+    let egg = document.createElement("div");
+    egg.className = "easter-egg";
+    egg.innerHTML = "🥚";
+    egg.style.right = (Math.random() * 50 + 20) + "px";
+    egg.style.bottom = "20px";
+    document.body.appendChild(egg);
+
+    egg.addEventListener("click", () => {
+      egg.classList.add("crack");
+      setTimeout(() => {
+        let pass = prompt("Shkruaj passwordin:");
+        if (pass === "DoktoreshaEnkit@Divjak.Com") {
+          alert("Ti je bota ime 🌍❤️");
+        } else {
+          alert("Gabim 😏");
+        }
+      }, 600);
+    });
+  }
+
+  function createHeart() {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-20px";
+    heart.style.fontSize = (10 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 4000);
+  }
+
+  const audio = document.getElementById('music');
+  audio.muted = true;
+  function enableAudio() {
+    audio.muted = false;
+    audio.play();
+    window.removeEventListener('click', enableAudio);
+  }
+  window.addEventListener('click', enableAudio, { once: true });
+</script>
+
+</body>
+</html>
   .container {
     position: relative;
     z-index: 2;
